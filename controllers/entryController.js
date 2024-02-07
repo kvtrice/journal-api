@@ -1,4 +1,4 @@
-import { EntryModel } from "../db"
+import { EntryModel } from "../db.js"
 
 // Route to get all journal entries
 export const getAllEntries = async (req, res) => {
@@ -18,7 +18,7 @@ export const getSingleEntry = async (req, res) => {
 // Route to add a new entry
 export const createNewEntry = async (req, res) => {
     try {
-        const insertedEntry = await EntryModel.create(req.body)
+        const insertedEntry = await (await EntryModel.create(req.body)).populate('category')
         res.status(201).send(insertedEntry)
     }
     catch (err) {
